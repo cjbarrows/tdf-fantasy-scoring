@@ -1,0 +1,12 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "react/jsx-filename-extension": [0],
+    "import/no-unresolved": [2, { "caseSensitive": false }],
+    "react/require-default-props": [0],
+    "react/destructuring-assignment": [0],
+    "no-console": [0]
+  }
+}

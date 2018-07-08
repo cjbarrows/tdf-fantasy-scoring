@@ -1,0 +1,66 @@
+{
+  "teams": {
+    "allTeams": [
+      {
+        "name": "Snake Climbers",
+        "owner": "Chazzer",
+        "riders": [
+          "Peter Sagan",
+          "Romain Bardet",
+          "Primoz Roglic",
+          "Jon Izagirre",
+          "Ilnur Zakarin",
+          "Greg Van Avermaet",
+          "Taylor Phinney",
+          "Luke Durbridge",
+          "Dylan Groenewegen"
+        ]
+      },
+      {
+        "name": "The Storm Troopers",
+        "owner": "Jojo",
+        "riders": [
+          "Daryl Impey",
+          "Christopher Froome",
+          "Julian Alaphilippe",
+          "Mikel Nieve",
+          "Serge Pauwels",
+          "Peter Sagan",
+          "Greg Van Avermaet",
+          "Thomas De Gendt",
+          "Tony Martin"
+        ]
+      },
+      {
+        "name": "Pika Power",
+        "owner": "Ethan",
+        "riders": [
+          "Tom Dumoulin",
+          "Rigoberto Uran",
+          "Adam Yates",
+          "Mikel Nieve",
+          "Fernando Gaviria",
+          "Daryl Impey",
+          "Simon Geschke",
+          "Luis-Leon Sanchez",
+          "Michael Matthews"
+        ]
+      },
+      {
+        "name": "The Real Sag Wagon",
+        "owner": "Katie",
+        "riders": [
+          "Christopher Froome",
+          "Wouter Poels",
+          "Warren Barguil",
+          "Rafal Majka",
+          "André Greipel",
+          "Niki Terpstra",
+          "Taylor Phinney",
+          "Mathew Hayman",
+          "Mikel Landa"
+        ]
+      }
+    ]
+  }
+}
