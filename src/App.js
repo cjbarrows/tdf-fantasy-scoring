@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import Scoring from './Scoring';
+import Scoring from "./Scoring";
 
-import './App.css';
+import "./App.css";
 
-import { simpleAction } from './actions/SimpleAction';
-
-import { getStageResults, scoring } from './actions/DataActions';
+import {
+  getStageResults,
+  getOverallResults,
+  scoring
+} from "./actions/DataActions";
 
 class App extends Component {
   componentWillMount = () => {
-    const { doGetStageResults } = this.props;
-    doGetStageResults(260);
-  };
-
-  doSomething = () => {
-    const { doSimpleAction } = this.props;
-    doSimpleAction();
+    const { doGetStageResults, doGetOverallResults } = this.props;
+    this.stage = 1;
+    doGetStageResults(1);
+    doGetOverallResults(1);
+    doGetStageResults(2);
+    doGetOverallResults(2);
   };
 
   doScoring = () => {
@@ -27,7 +28,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="App">
         <button type="button" onClick={this.doSomething}>
@@ -37,44 +37,49 @@ class App extends Component {
           Scoring
         </button>
         <Scoring
-          stage={1}
-          stageResults={this.props.teams.stageResults}
+          stage={this.stage}
+          stageResults={this.props.dataReducer.stageResults}
+          overallResults={this.props.dataReducer.overallResults}
           allTeams={this.props.teams.allTeams}
         />
-        <pre>
-          {JSON.stringify(this.props)}
-        </pre>
+        <Scoring
+          stage={2}
+          stageResults={this.props.dataReducer.stageResults}
+          overallResults={this.props.dataReducer.overallResults}
+          allTeams={this.props.teams.allTeams}
+        />
+        <pre>{JSON.stringify(this.props)}</pre>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  ...state,
+  ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-  doSimpleAction: () => dispatch(simpleAction()),
   doGetStageResults: stage => dispatch(getStageResults(stage)),
-  doScoring: () => dispatch(scoring()),
+  doGetOverallResults: stage => dispatch(getOverallResults(stage)),
+  doScoring: () => dispatch(scoring())
 });
 
 App.propTypes = {
-  doSimpleAction: PropTypes.func.isRequired,
   doGetStageResults: PropTypes.func,
+  doGetOverallResults: PropTypes.func,
   doScoring: PropTypes.func,
   teams: PropTypes.shape({
     allTeams: PropTypes.arrayOf(
       PropTypes.shape({
         owner: PropTypes.string,
-        riders: PropTypes.arrayOf(PropTypes.string),
-      }),
+        riders: PropTypes.arrayOf(PropTypes.string)
+      })
     ),
-    stageResults: PropTypes.shape(),
-  }),
+    stageResults: PropTypes.shape()
+  })
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(App);
