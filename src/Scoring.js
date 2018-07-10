@@ -82,6 +82,11 @@ const getTotalStagePointsForTeam = (stage, team, stageResults, overallResults) =
   return scores.reduce((total, val) => total + val);
 };
 
+const ScoreCell = (props) => (
+  <div className="score-cell"><p className="rider">{props.rider}</p>
+    <p className="scores">{props.scores.join('+')}</p></div>
+)
+
 // eslint-disable-next-line
 class Scoring extends Component {
   render = () => {
@@ -94,48 +99,39 @@ class Scoring extends Component {
           Scoring for Stage
           <span className="points">{stage}</span>
         </h1>
-        <table>
-          <thead>
-            <tr>
-              {allTeams.map((team, index) => <th key={index}>{team.name}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {[...Array(numRiders)].map((x, i) => (
-              <tr>
-                {allTeams.map(team => (
-                  <td>
-                    <span>{getRider(team, i)}</span>
-                    <span className="points">
-                      {getStageResultPointsForRider(
-                        stage,
-                        getRider(team, i),
-                        stageResults
-                      )}+
-                      {getOverallResultPointsForRider(
-                        stage,
-                        getRider(team, i),
-                        overallResults
-                      )}
-                    </span>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              {allTeams.map(team => (
-                <td>
-                  Total
-                  <span className="points">
-                    {getTotalStagePointsForTeam(stage, team, stageResults, overallResults)}
-                  </span>
-                </td>
-              ))}
-            </tr>
-          </tfoot>
-        </table>
+        <div className="score-container">
+          {allTeams.map((team, index) => {
+            let teamTotal = 0;
+            return (
+              <div className="team-container" key={index}>
+                <p className="team-name">{team.name}</p>
+                {team.riders.map((rider, index) => {
+                  const scores = [getStageResultPointsForRider(
+                    stage,
+                    rider,
+                    stageResults
+                  ), getOverallResultPointsForRider(
+                    stage,
+                    rider,
+                    overallResults
+                  )];
+
+                  teamTotal += scores.reduce((a, b) => a + b);
+
+                  return (
+                    <ScoreCell
+                      rider={rider}
+                      scores={scores}>
+                    </ScoreCell>
+                  )
+                })}
+                <p className="team-total">Total: {teamTotal}</p>
+              </div>
+            )
+          }
+          )
+          }
+        </div>
       </div>
     ) : null;
   };

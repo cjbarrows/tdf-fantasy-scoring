@@ -1,3 +1,36 @@
 span.points {
   padding-left: 10px;
 }
+
+.score-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.score-container p {
+  margin: 0;
+}
+
+.score-container .team-name {
+  font-weight: bold;
+}
+
+.score-container .score-cell {
+  padding-bottom: 5px;
+}
+
+.score-container .score-cell .rider {
+  font-size: 12px;
+}
+
+.score-container .score-cell .scores {
+  font-size: 11px;
+}
+
+.team-container {
+  padding: 10px;
+}
+
+.team-container .team-total {
+  font-weight: bold;
+}

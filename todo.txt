@@ -1,0 +1,19 @@
+// POINTS:
+// Stage Results: check
+// Time Trial Results
+// Overall General: check
+// Overall Points 
+// Overall Mountain
+// Intermediate Sprint
+// Summit HC Points
+// Summit 1st Category Points
+// Breakaway Points
+// Assists: stage
+// Assists: overall 
+// Assists: overall team
+// Final Overall General
+// Final Overall Points
+// Final Mountain Points
+// Final Team Points
+
+// TODO: add a <ScoreColumn> or <ScoreCell> object to hold scores and add them up?
