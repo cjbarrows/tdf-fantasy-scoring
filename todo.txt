@@ -2,9 +2,9 @@
 // Stage Results: check
 // Time Trial Results
 // Overall General: check
-// Overall Points 
-// Overall Mountain
-// Intermediate Sprint
+// Overall Points (green jersey): check
+// Overall Mountain: check
+// Intermediate Sprint (in /stage results?)
 // Summit HC Points
 // Summit 1st Category Points
 // Breakaway Points
@@ -16,4 +16,58 @@
 // Final Mountain Points
 // Final Team Points
 
-// TODO: add a <ScoreColumn> or <ScoreCell> object to hold scores and add them up?
+// TODO:
+- show team total (after looping through stages)
+- automatically know which stages to show based on date
+- find out if team time trial results ever gets updated
+- host on Firebase
+- add key for scoring?
+- allow non-automatic scoring to be entered via Firebase
+- store intermediate results in Firebase
+- allow Wildcard scoring using Firebase
+
+// DONE:
+- add a <ScoreColumn> or <ScoreCell> object to hold scores and add them up?
+
+
+
+
+
+
+api tdf2017
+
+// teams
+http://fep-api.dimensiondata.com/v2/teams
+
+// riders (race=19)
+http://fep-api.dimensiondata.com/v2/rider/v2/19
+
+// stages
+http://fep-api.dimensiondata.com/v2/race/19/stages
+
+// current stage
+http://fep-api.dimensiondata.com/v2/race/19/stages/current
+
+// starters
+http://fep-api.dimensiondata.com/v2/stages/209/starters
+
+// groups (209 is stage)
+http://fep-api.dimensiondata.com/v2/stages/209/group-telemetry
+
+// withdrawals
+http://fep-api.dimensiondata.com/v2/stages/209/withdrawals
+
+// trial
+http://fep-api.dimensiondata.com/v2/trial/19
+
+// riders
+http://fep-api.dimensiondata.com/v2/stages/209/rider-telemetry
+
+// jerseys
+http://fep-api.dimensiondata.com/v2/stages/209//classification/jersey
+
+// overall classification
+http://fep-api.dimensiondata.com/v2/stages/209/classification/overall
+
+// stage classification
+http://fep-api.dimensiondata.com/v2/stages/209/classification/stage

@@ -37,13 +37,6 @@ class App extends Component {
           Scoring
         </button>
         <Scoring
-          stage={this.stage}
-          stageResults={this.props.dataReducer.stageResults}
-          overallResults={this.props.dataReducer.overallResults}
-          allTeams={this.props.teams.allTeams}
-        />
-        <Scoring
-          stage={2}
           stageResults={this.props.dataReducer.stageResults}
           overallResults={this.props.dataReducer.overallResults}
           allTeams={this.props.teams.allTeams}

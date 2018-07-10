@@ -46,7 +46,7 @@ const getStageResultPointsForRider = (stage, rider, results) => {
   return pos < points.length ? points[pos] : 0;
 };
 
-const getOverallResultPointsForRider = (stage, rider, results) => {
+const getOverallGeneralPointsForRider = (stage, rider, results) => {
   const pos =
     parseInt(findRiderPosition(stage, results, rider, "General"), 10) - 1;
   const points = [
@@ -74,12 +74,32 @@ const getOverallResultPointsForRider = (stage, rider, results) => {
   return pos < points.length ? points[pos] : 0;
 };
 
-const getTotalStagePointsForTeam = (stage, team, stageResults, overallResults) => {
-  const scores = team.riders.map(rider =>
-    parseInt(getStageResultPointsForRider(stage, rider, stageResults), 10) +
-    parseInt(getOverallResultPointsForRider(stage, rider, overallResults), 10)
-  );
-  return scores.reduce((total, val) => total + val);
+const getOverallPointsPointsForRider = (stage, rider, results) => {
+  const pos =
+    parseInt(findRiderPosition(stage, results, rider, "Sprint"), 10) - 1;
+  const points = [
+    10,
+    6,
+    4,
+    3,
+    2,
+    1,
+  ];
+  return pos < points.length ? points[pos] : 0;
+};
+
+const getOverallMountainPointsForRider = (stage, rider, results) => {
+  const pos =
+    parseInt(findRiderPosition(stage, results, rider, "Mountain"), 10) - 1;
+  const points = [
+    10,
+    6,
+    4,
+    3,
+    2,
+    1,
+  ];
+  return pos < points.length ? points[pos] : 0;
 };
 
 const ScoreCell = (props) => (
@@ -93,48 +113,66 @@ class Scoring extends Component {
     const { allTeams, stageResults, overallResults, stage } = this.props;
     const numRiders = allTeams[0].riders.length;
 
+    const totals = {};
+    for (let i = 0; i < allTeams.length; i++) {
+      totals[i] = { stage: 0, overall: 0 };
+    }
+
     return stageResults && overallResults ? (
-      <div>
-        <h1>
-          Scoring for Stage
-          <span className="points">{stage}</span>
-        </h1>
-        <div className="score-container">
-          {allTeams.map((team, index) => {
-            let teamTotal = 0;
-            return (
-              <div className="team-container" key={index}>
-                <p className="team-name">{team.name}</p>
-                {team.riders.map((rider, index) => {
-                  const scores = [getStageResultPointsForRider(
-                    stage,
-                    rider,
-                    stageResults
-                  ), getOverallResultPointsForRider(
-                    stage,
-                    rider,
-                    overallResults
-                  )];
+      [1, 2].map((stage, index) => (
+        <div>
+          <h2>
+            Scoring for Stage<span className="points">{stage}</span>
+          </h2>
+          <div className="score-container">
+            {allTeams.map((team, teamIndex) => {
+              totals[teamIndex].stage = 0;
+              return (
+                <div className="team-container" key={index}>
+                  <p className="team-name">{team.name}</p>
+                  {team.riders.map((rider, index) => {
+                    const scores = [
+                      getStageResultPointsForRider(
+                        stage,
+                        rider,
+                        stageResults
+                      ),
+                      getOverallGeneralPointsForRider(
+                        stage,
+                        rider,
+                        overallResults
+                      ),
+                      getOverallPointsPointsForRider(
+                        stage,
+                        rider,
+                        overallResults
+                      ),
+                      getOverallMountainPointsForRider(
+                        stage,
+                        rider,
+                        overallResults
+                      )
+                    ];
 
-                  teamTotal += scores.reduce((a, b) => a + b);
+                    const riderScore = scores.reduce((a, b) => a + b);
+                    totals[teamIndex].stage += riderScore;
+                    totals[teamIndex].overall += riderScore;
 
-                  return (
-                    <ScoreCell
-                      rider={rider}
-                      scores={scores}>
-                    </ScoreCell>
-                  )
-                })}
-                <p className="team-total">Total: {teamTotal}</p>
-              </div>
-            )
-          }
-          )
-          }
+                    return (
+                      <ScoreCell
+                        rider={rider}
+                        scores={scores}>
+                      </ScoreCell>
+                    );
+                  })}
+                  <p className="team-total">Total: {totals[teamIndex].stage}</p>
+                </div>
+              )
+            })}
+          </div>
         </div>
-      </div>
-    ) : null;
-  };
+      ))) : null;
+  }
 }
 
 Scoring.propTypes = {
