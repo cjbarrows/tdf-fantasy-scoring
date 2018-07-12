@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as moment from 'moment';
 
 import Scoring from "./Scoring";
 
@@ -15,11 +16,16 @@ import {
 class App extends Component {
   componentWillMount = () => {
     const { doGetStageResults, doGetOverallResults } = this.props;
-    this.stage = 1;
-    doGetStageResults(1);
-    doGetOverallResults(1);
-    doGetStageResults(2);
-    doGetOverallResults(2);
+
+    const start = moment('2018-07-06');
+    const now = moment();
+
+    const days = now.diff(start, 'days');
+
+    for (let i = 1; i <= days; i++) {
+      doGetStageResults(i);
+      doGetOverallResults(i);
+    }
   };
 
   doScoring = () => {

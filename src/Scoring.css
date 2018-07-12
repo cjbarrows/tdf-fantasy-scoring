@@ -11,6 +11,33 @@ span.points {
   margin: 0;
 }
 
+.score-container span.mini-points {
+  margin: 0 3px;
+  padding: 1px;
+}
+
+.score-container span.yellow {
+  background: yellow;
+}
+
+.score-container span.bold-yellow {
+  background: yellow;
+  font-weight: bold;
+}
+
+.score-container span.red {
+  background: red;
+}
+
+.score-container span.green {
+  background: green;
+}
+
+.score-container span.bold-green {
+  background: green;
+  font-weight: bold;
+}
+
 .score-container .team-name {
   font-weight: bold;
 }

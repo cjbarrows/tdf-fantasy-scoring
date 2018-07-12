@@ -102,9 +102,15 @@ const getOverallMountainPointsForRider = (stage, rider, results) => {
   return pos < points.length ? points[pos] : 0;
 };
 
-const ScoreCell = (props) => (
-  <div className="score-cell"><p className="rider">{props.rider}</p>
-    <p className="scores">{props.scores.join('+')}</p></div>
+const listScore = ({ points, style }) => 
+  points > 0 ? (
+  <span className={`mini-points ${style}`}>{points}</span>
+  ): null;
+
+const ScoreCell = ({ rider, scores }) => (
+  <div className="score-cell"><p className="rider">{rider}</p>
+    <p className="scores">{scores.map(listScore)}</p>
+  </div>
 )
 
 // eslint-disable-next-line
@@ -118,60 +124,95 @@ class Scoring extends Component {
       totals[i] = { stage: 0, overall: 0 };
     }
 
-    return stageResults && overallResults ? (
-      [1, 2].map((stage, index) => (
-        <div>
-          <h2>
-            Scoring for Stage<span className="points">{stage}</span>
-          </h2>
-          <div className="score-container">
-            {allTeams.map((team, teamIndex) => {
-              totals[teamIndex].stage = 0;
-              return (
-                <div className="team-container" key={index}>
-                  <p className="team-name">{team.name}</p>
-                  {team.riders.map((rider, index) => {
-                    const scores = [
-                      getStageResultPointsForRider(
-                        stage,
-                        rider,
-                        stageResults
-                      ),
-                      getOverallGeneralPointsForRider(
-                        stage,
-                        rider,
-                        overallResults
-                      ),
-                      getOverallPointsPointsForRider(
-                        stage,
-                        rider,
-                        overallResults
-                      ),
-                      getOverallMountainPointsForRider(
-                        stage,
-                        rider,
-                        overallResults
-                      )
-                    ];
+    const numStages = stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
 
-                    const riderScore = scores.reduce((a, b) => a + b);
-                    totals[teamIndex].stage += riderScore;
-                    totals[teamIndex].overall += riderScore;
+    const htmlElements = [];
+    let html = null;
 
-                    return (
-                      <ScoreCell
-                        rider={rider}
-                        scores={scores}>
-                      </ScoreCell>
-                    );
-                  })}
-                  <p className="team-total">Total: {totals[teamIndex].stage}</p>
-                </div>
-              )
-            })}
+    if (stageResults && overallResults)
+      html = [...Array(numStages)].map((obj, stageIndex) => {
+        const stage = stageIndex + 1;
+        return (
+          <div key={'stage-div' + stageIndex}>
+            <h2>
+              Scoring for Stage<span className="points">{stage}</span>
+            </h2>
+            <div className="score-container">
+              {allTeams.map((team, teamIndex) => {
+                totals[teamIndex].stage = 0;
+                return (
+                  <div className="team-container" key={'stage' + stage + 'team' + teamIndex}>
+                    <p className="team-name">{team.name}</p>
+                    {team.riders.map((rider, index) => {
+                      const scores = [
+                        {
+                          points: getStageResultPointsForRider(
+                            stage,
+                            rider,
+                            stageResults),
+                          style: "yellow"
+                        },
+                        {
+                          points: getOverallGeneralPointsForRider(
+                            stage,
+                            rider,
+                            overallResults
+                          ),
+                          style: "bold-yellow"
+                        },
+                        {
+                          points:
+                            getOverallPointsPointsForRider(
+                              stage,
+                              rider,
+                              overallResults),
+                          style:
+                            "bold-green"
+                        },
+                        {
+                          points: getOverallMountainPointsForRider(
+                            stage,
+                            rider,
+                            overallResults),
+                          style:
+                            "bold-red"
+                        }
+                      ];
+
+                      const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
+                      totals[teamIndex].stage += riderScore;
+                      totals[teamIndex].overall += riderScore;
+
+                      return (
+                        <ScoreCell
+                          key={'cell-stage' + stage + 'team' + teamIndex + 'rider' + index}
+                          rider={rider}
+                          scores={scores}>
+                        </ScoreCell>
+                      );
+                    })}
+                    <p className="team-total">Total: {totals[teamIndex].stage}</p>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
-      ))) : null;
+        )
+      })
+
+    htmlElements.push(html);
+
+    htmlElements.push((
+      <div className="score-container">
+        {
+          allTeams.map((team, teamIndex) => (
+            <p className="overall-total">Overall: {totals[teamIndex].overall}</p>
+          ))
+        }
+      </div>
+    ));
+
+    return htmlElements;
   }
 }
 

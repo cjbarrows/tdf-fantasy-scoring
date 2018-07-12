@@ -18,7 +18,6 @@
 
 // TODO:
 - show team total (after looping through stages)
-- automatically know which stages to show based on date
 - find out if team time trial results ever gets updated
 - host on Firebase
 - add key for scoring?
@@ -28,6 +27,7 @@
 
 // DONE:
 - add a <ScoreColumn> or <ScoreCell> object to hold scores and add them up?
+- automatically know which stages to show based on date
 
 
 
