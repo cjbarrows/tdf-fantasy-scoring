@@ -1,0 +1,13 @@
+// Place your settings in this file to overwrite the default settings
+{
+  "files.eol": "\n",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.wordWrapColumn": 100,
+  "editor.wordWrap": "wordWrapColumn",
+  "prettier.eslintIntegration": true
+}
