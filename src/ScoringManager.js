@@ -44,7 +44,7 @@ const getOverallMountainPointsForRider = (stageIndex, rider, results) => {
   return pos < points.length ? points[pos] : 0;
 };
 
-const processData = (stageResults, overallResults, allTeams) => {
+const processData = ({ stageResults, overallResults, allTeams }) => {
   const numRiders = allTeams[0].riders.length;
 
   const totals = {};
@@ -61,11 +61,13 @@ const processData = (stageResults, overallResults, allTeams) => {
       totals[teamIndex].stage = 0;
       const team = allTeams[teamIndex];
       for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex++) {
-        const p1 = getStageResultPointsForRider(stageIndex, riderIndex, stageResults);
-        const p2 = getOverallGeneralPointsForRider(stageIndex, riderIndex, overallResults);
-        const p3 = getOverallPointsPointsForRider(stageIndex, riderIndex, overallResults);
-        const p4 = getOverallMountainPointsForRider(stageIndex, riderIndex, overallResults);
-        const scores = [p1, p2, p3, p4];
+        const rider = team.riders[riderIndex];
+        const scores = [
+          { name: 'GC', points: getStageResultPointsForRider(stageIndex, rider, stageResults) },
+          { name: 'Sprint', points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults)},
+          { name: 'Sprint', points: getOverallPointsPointsForRider(stageIndex, rider, overallResults)},
+          { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults)}
+        ];
         const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
         totals[teamIndex].stage += riderScore;
         totals[teamIndex].overall += riderScore;
@@ -78,6 +80,10 @@ const processData = (stageResults, overallResults, allTeams) => {
 class ScoringManager extends Component {
   render() {
     const { stageResults, overallResults, allTeams } = this.props;
+
+    if (stageResults && overallResults && allTeams) {
+      processData(this.props);
+    }
 
     return stageResults && overallResults && allTeams ? (
       <Scoresheet
