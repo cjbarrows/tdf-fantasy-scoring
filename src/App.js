@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as moment from 'moment';
 
-import Scoring from "./Scoring";
+import ScoringManager from "./ScoringManager";
 
 import "./App.css";
 
@@ -22,7 +22,7 @@ class App extends Component {
 
     const days = now.diff(start, 'days');
 
-    for (let i = 1; i <= days; i++) {
+    for (let i = 0; i < days; i++) {
       doGetStageResults(i);
       doGetOverallResults(i);
     }
@@ -34,7 +34,7 @@ class App extends Component {
   };
 
   render() {
-    return (
+    return this.props.dataReducer ? (
       <div className="App">
         <button type="button" onClick={this.doSomething}>
           Test redux action
@@ -42,20 +42,22 @@ class App extends Component {
         <button type="button" onClick={this.doScoring}>
           Scoring
         </button>
-        <Scoring
+        <ScoringManager
           stageResults={this.props.dataReducer.stageResults}
           overallResults={this.props.dataReducer.overallResults}
           allTeams={this.props.teams.allTeams}
         />
         <pre>{JSON.stringify(this.props)}</pre>
       </div>
-    );
+    ) : null;
   }
 }
 
-const mapStateToProps = state => ({
-  ...state
-});
+const mapStateToProps = (state) => {
+  return {
+    ...state
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   doGetStageResults: stage => dispatch(getStageResults(stage)),

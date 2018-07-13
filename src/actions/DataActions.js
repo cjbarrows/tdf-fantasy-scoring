@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getStageResults = stage => (dispatch) => {
+const getStageResults = stage => (dispatch) => {
   axios
-    .get(`http://fep-api.dimensiondata.com/v2/stages/${259 + stage}/classification/stage`)
+    .get(`http://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/stage`)
     .then((data) => {
       dispatch({
         type: 'STAGE_LOADED',
@@ -14,9 +14,9 @@ export const getStageResults = stage => (dispatch) => {
     });
 };
 
-export const getOverallResults = stage => (dispatch) => {
+const getOverallResults = stage => (dispatch) => {
   axios
-    .get(`http://fep-api.dimensiondata.com/v2/stages/${259 + stage}/classification/overall`)
+    .get(`http://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/overall`)
     .then((data) => {
       dispatch({
         type: 'OVERALL_LOADED',
@@ -28,13 +28,13 @@ export const getOverallResults = stage => (dispatch) => {
     });
 };
 
-export const scoring = () => (dispatch) => {
+const scoring = () => (dispatch) => {
   dispatch({
     type: 'DO_SCORING',
   });
 };
 
-export default {
+export {
   getStageResults,
   getOverallResults,
   scoring,

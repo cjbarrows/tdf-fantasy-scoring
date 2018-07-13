@@ -4,7 +4,7 @@
 // Overall General: check
 // Overall Points (green jersey): check
 // Overall Mountain: check
-// Intermediate Sprint (in /stage results?)
+// Intermediate Sprint (in /stage results?): yes, can do
 // Summit HC Points
 // Summit 1st Category Points
 // Breakaway Points
@@ -17,13 +17,13 @@
 // Final Team Points
 
 // TODO:
+- how to use async await when getting the data?
 - show team total (after looping through stages)
 - find out if team time trial results ever gets updated
-- host on Firebase
+- host on Firebase or Github
 - add key for scoring?
-- allow non-automatic scoring to be entered via Firebase
-- store intermediate results in Firebase
-- allow Wildcard scoring using Firebase
+- allow non-automatic scoring to be entered via Json db
+- allow player swap via Json db
 
 // DONE:
 - add a <ScoreColumn> or <ScoreCell> object to hold scores and add them up?

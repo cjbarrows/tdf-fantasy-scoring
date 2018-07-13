@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './Scoring.css';
+import './Scoresheet.css';
 
 const getRider = (team, index) => team.riders[index];
 
-const findRiderPosition = (stage, results, name, category) => {
-  if (!(results && results[stage] && results[stage][category])) {
+const findRiderPosition = (stageIndex, results, name, category) => {
+  if (!(results && results[stageIndex] && results[stageIndex][category])) {
     return undefined;
   }
 
-  const data = results[stage][category];
+  const data = results[stageIndex][category];
   const f = data.find((finisher) => {
     const fullName = `${finisher.FirstName} ${finisher.LastName}`.toLowerCase();
     if (fullName === name.toLowerCase()) return true;
@@ -22,26 +22,26 @@ const findRiderPosition = (stage, results, name, category) => {
   return f ? f.Position : undefined;
 };
 
-const getStageResultPointsForRider = (stage, rider, results) => {
-  const pos = parseInt(findRiderPosition(stage, results, rider, 'General'), 10) - 1;
+const getStageResultPointsForRider = (stageIndex, rider, results) => {
+  const pos = parseInt(findRiderPosition(stageIndex, results, rider, 'General'), 10) - 1;
   const points = [200, 150, 120, 100, 80, 70, 60, 50, 40, 30, 25, 20, 15, 10, 5];
   return pos < points.length ? points[pos] : 0;
 };
 
-const getOverallGeneralPointsForRider = (stage, rider, results) => {
-  const pos = parseInt(findRiderPosition(stage, results, rider, 'General'), 10) - 1;
+const getOverallGeneralPointsForRider = (stageIndex, rider, results) => {
+  const pos = parseInt(findRiderPosition(stageIndex, results, rider, 'General'), 10) - 1;
   const points = [25, 22, 20, 18, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   return pos < points.length ? points[pos] : 0;
 };
 
-const getOverallPointsPointsForRider = (stage, rider, results) => {
-  const pos = parseInt(findRiderPosition(stage, results, rider, 'Sprint'), 10) - 1;
+const getOverallPointsPointsForRider = (stageIndex, rider, results) => {
+  const pos = parseInt(findRiderPosition(stageIndex, results, rider, 'Sprint'), 10) - 1;
   const points = [10, 6, 4, 3, 2, 1];
   return pos < points.length ? points[pos] : 0;
 };
 
-const getOverallMountainPointsForRider = (stage, rider, results) => {
-  const pos = parseInt(findRiderPosition(stage, results, rider, 'Mountain'), 10) - 1;
+const getOverallMountainPointsForRider = (stageIndex, rider, results) => {
+  const pos = parseInt(findRiderPosition(stageIndex, results, rider, 'Mountain'), 10) - 1;
   const points = [10, 6, 4, 3, 2, 1];
   return pos < points.length ? points[pos] : 0;
 };
@@ -68,12 +68,12 @@ const ScoreCell = ({ rider, scores }) => (
   </div>
 );
 
-// eslint-disable-next-line
-class Scoring extends Component {
+class Scoresheet extends Component {
   render() {
     const {
-      allTeams, stageResults, overallResults, stage,
+      allTeams, stageResults, overallResults,
     } = this.props;
+
     const numRiders = allTeams[0].riders.length;
 
     const totals = {};
@@ -102,7 +102,7 @@ class Scoring extends Component {
               totals[teamIndex].stage = 0;
               return (
                 <div
-                  key={`stage${stage}team${teamIndex}`}
+                  key={`stage${stageIndex}team${teamIndex}`}
                   className="team-container"
                 >
                   <p className="team-name">
@@ -111,19 +111,19 @@ class Scoring extends Component {
                   {team.riders.map((rider, index) => {
                     const scores = [
                       {
-                        points: getStageResultPointsForRider(stage, rider, stageResults),
-                        style: 'yellow',
+                        points: getStageResultPointsForRider(stageIndex, rider, stageResults),
+                        style: 'bordered yellow',
                       },
                       {
-                        points: getOverallGeneralPointsForRider(stage, rider, overallResults),
+                        points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults),
                         style: 'bold-yellow',
                       },
                       {
-                        points: getOverallPointsPointsForRider(stage, rider, overallResults),
+                        points: getOverallPointsPointsForRider(stageIndex, rider, overallResults),
                         style: 'bold-green',
                       },
                       {
-                        points: getOverallMountainPointsForRider(stage, rider, overallResults),
+                        points: getOverallMountainPointsForRider(stageIndex, rider, overallResults),
                         style: 'bold-red',
                       },
                     ];
@@ -134,7 +134,7 @@ class Scoring extends Component {
 
                     return (
                       <ScoreCell
-                        key={`cell-stage${stage}team${teamIndex}rider${index}`}
+                        key={`cell-stage${stageIndex}team${teamIndex}rider${index}`}
                         rider={rider}
                         scores={scores}
                       />
@@ -169,10 +169,4 @@ class Scoring extends Component {
   }
 }
 
-Scoring.propTypes = {
-  stageResults: PropTypes.shape(),
-  allTeams: PropTypes.arrayOf(PropTypes.shape()),
-  stage: PropTypes.number,
-};
-
-export default Scoring;
+export default Scoresheet;
