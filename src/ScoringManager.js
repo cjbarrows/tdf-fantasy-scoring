@@ -98,7 +98,7 @@ class ScoringManager extends Component {
 ScoringManager.propTypes = {
   stageResults: PropTypes.shape(),
   allTeams: PropTypes.arrayOf(PropTypes.shape()),
-  overallResults: PropTypes.arrayOf(PropTypes.shape()),
+  overallResults: PropTypes.shape(),
 };
 
 export default ScoringManager;

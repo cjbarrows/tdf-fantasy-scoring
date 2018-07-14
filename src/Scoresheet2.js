@@ -1,7 +1,15 @@
+/* eslint react/jsx-one-expression-per-line: 0 */
+/* eslint react/jsx-key: 0 */
+/* eslint react/prop-types: 0 */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import './Scoresheet.css';
+
+const Stage = ({ index }) => (
+  <p>Stage<span>{index + 1}</span></p>
+);
 
 class Scoresheet2 extends Component {
   render() {
@@ -9,16 +17,15 @@ class Scoresheet2 extends Component {
       allTeams, data, data: { byStage },
     } = this.props;
 
+    console.log(byStage.length);
+
     return data ? (
       <div>
-        <p>
-          {byStage.map(({ stage }) => (
-            <p>
-              Stage
-              {stage}
-            </p>
-          ))}
-        </p>
+        {byStage.map((stage, index) => (
+          <Stage
+            data={stage}
+            index={index}
+          />))}
       </div>
     ) : null;
   }
