@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Scoresheet from './Scoresheet.js';
+import Scoresheet from './Scoresheet';
 
 const findRiderPosition = (stageIndex, results, name, category) => {
   if (!(results && results[stageIndex] && results[stageIndex][category])) {
@@ -56,17 +56,17 @@ const processData = ({ stageResults, overallResults, allTeams }) => {
   const numStages =
     stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
 
-  for (let stageIndex = 0; stageIndex < numStages; stageIndex++) {
-    for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex++) {
+  for (let stageIndex = 0; stageIndex < numStages; stageIndex += 1) {
+    for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex += 1) {
       totals[teamIndex].stage = 0;
       const team = allTeams[teamIndex];
-      for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex++) {
+      for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex += 1) {
         const rider = team.riders[riderIndex];
         const scores = [
           { name: 'GC', points: getStageResultPointsForRider(stageIndex, rider, stageResults) },
-          { name: 'Sprint', points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults)},
-          { name: 'Sprint', points: getOverallPointsPointsForRider(stageIndex, rider, overallResults)},
-          { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults)}
+          { name: 'Sprint', points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults) },
+          { name: 'Sprint', points: getOverallPointsPointsForRider(stageIndex, rider, overallResults) },
+          { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults) },
         ];
         const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
         totals[teamIndex].stage += riderScore;
@@ -74,7 +74,7 @@ const processData = ({ stageResults, overallResults, allTeams }) => {
       }
     }
   }
-}
+};
 
 
 class ScoringManager extends Component {
@@ -99,6 +99,6 @@ ScoringManager.propTypes = {
   stageResults: PropTypes.shape(),
   allTeams: PropTypes.arrayOf(PropTypes.shape()),
   stage: PropTypes.number,
-}
+};
 
 export default ScoringManager;
