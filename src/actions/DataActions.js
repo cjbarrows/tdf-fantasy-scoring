@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getStageResults = stage => (dispatch) => {
   axios
-    .get(`http://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/stage`)
+    .get(`https://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/stage`)
     .then((data) => {
       dispatch({
         type: 'STAGE_LOADED',
@@ -16,7 +16,7 @@ const getStageResults = stage => (dispatch) => {
 
 const getOverallResults = stage => (dispatch) => {
   axios
-    .get(`http://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/overall`)
+    .get(`https://fep-api.dimensiondata.com/v2/stages/${260 + stage}/classification/overall`)
     .then((data) => {
       dispatch({
         type: 'OVERALL_LOADED',
@@ -37,5 +37,5 @@ const scoring = () => (dispatch) => {
 export {
   getStageResults,
   getOverallResults,
-  scoring,
+  scoring
 };

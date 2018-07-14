@@ -6,17 +6,16 @@ import './Scoresheet.css';
 class Scoresheet2 extends Component {
   render() {
     const {
-      allTeams, data,
+      allTeams, data, data: { byStage },
     } = this.props;
 
     return data ? (
       <div>
         <p>
-          {data[0][0].riders[0].name}
-          {data[0][0].riders[0].scores.map(score => (
+          {byStage.map(({ stage }) => (
             <p>
-              {score.name}
-              {score.points}
+              Stage
+              {stage}
             </p>
           ))}
         </p>
@@ -24,5 +23,10 @@ class Scoresheet2 extends Component {
     ) : null;
   }
 }
+
+Scoresheet2.propTypes = {
+  allTeams: PropTypes.shape,
+  data: PropTypes.shape,
+};
 
 export default Scoresheet2;
