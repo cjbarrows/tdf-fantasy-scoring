@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Scoresheet from './Scoresheet';
+import Scoresheet2 from './Scoresheet2';
 
 const findRiderPosition = (stageIndex, results, name, category) => {
   if (!(results && results[stageIndex] && results[stageIndex][category])) {
@@ -44,50 +44,49 @@ const getOverallMountainPointsForRider = (stageIndex, rider, results) => {
   return pos < points.length ? points[pos] : 0;
 };
 
-const processData = ({ stageResults, overallResults, allTeams }) => {
-  const totals = {};
-  for (let i = 0; i < allTeams.length; i += 1) {
-    totals[i] = { stage: 0, overall: 0 };
-  }
+class ScoringManager extends Component {
+  processData({ stageResults, overallResults, allTeams }) {
+    const data = [];
 
-  // eslint-disable-next-line
-  const numStages =
-    stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
+    // eslint-disable-next-line
+    const numStages =
+      stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
 
-  for (let stageIndex = 0; stageIndex < numStages; stageIndex += 1) {
-    for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex += 1) {
-      totals[teamIndex].stage = 0;
-      const team = allTeams[teamIndex];
-      for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex += 1) {
-        const rider = team.riders[riderIndex];
-        const scores = [
-          { name: 'GC', points: getStageResultPointsForRider(stageIndex, rider, stageResults) },
-          { name: 'Sprint', points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults) },
-          { name: 'Sprint', points: getOverallPointsPointsForRider(stageIndex, rider, overallResults) },
-          { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults) },
-        ];
-        const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
-        totals[teamIndex].stage += riderScore;
-        totals[teamIndex].overall += riderScore;
+    for (let stageIndex = 0; stageIndex < numStages; stageIndex += 1) {
+      data[stageIndex] = [];
+      for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex += 1) {
+        data[stageIndex][teamIndex] = { stage: 0, overall: 0, riders: [] };
+        const totals = data[stageIndex][teamIndex];
+        const team = allTeams[teamIndex];
+        for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex += 1) {
+          const rider = team.riders[riderIndex];
+          const scores = [
+            { name: 'Stage', points: getStageResultPointsForRider(stageIndex, rider, stageResults) },
+            { name: 'GC', points: getOverallGeneralPointsForRider(stageIndex, rider, overallResults) },
+            { name: 'Points', points: getOverallPointsPointsForRider(stageIndex, rider, overallResults) },
+            { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults) },
+          ];
+          const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
+          totals.stage += riderScore;
+          totals.overall += riderScore;
+          totals.riders.push({ name: rider, scores });
+        }
       }
     }
+    this.data = data;
   }
-};
 
-
-class ScoringManager extends Component {
   render() {
     const { stageResults, overallResults, allTeams } = this.props;
 
     if (stageResults && overallResults && allTeams) {
-      processData(this.props);
+      this.processData(this.props);
     }
 
     return stageResults && overallResults && allTeams ? (
-      <Scoresheet
+      <Scoresheet2
         allTeams={allTeams}
-        overallResults={overallResults}
-        stageResults={stageResults}
+        data={this.data}
       />
     ) : null;
   }
