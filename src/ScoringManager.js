@@ -45,8 +45,6 @@ const getOverallMountainPointsForRider = (stageIndex, rider, results) => {
 };
 
 const processData = ({ stageResults, overallResults, allTeams }) => {
-  const numRiders = allTeams[0].riders.length;
-
   const totals = {};
   for (let i = 0; i < allTeams.length; i += 1) {
     totals[i] = { stage: 0, overall: 0 };
@@ -87,9 +85,9 @@ class ScoringManager extends Component {
 
     return stageResults && overallResults && allTeams ? (
       <Scoresheet
-        stageResults={stageResults}
-        overallResults={overallResults}
         allTeams={allTeams}
+        overallResults={overallResults}
+        stageResults={stageResults}
       />
     ) : null;
   }
@@ -98,7 +96,7 @@ class ScoringManager extends Component {
 ScoringManager.propTypes = {
   stageResults: PropTypes.shape(),
   allTeams: PropTypes.arrayOf(PropTypes.shape()),
-  stage: PropTypes.number,
+  overallResults: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default ScoringManager;
