@@ -15,11 +15,11 @@ const Rider = ({ rider }) => (
 const Team = ({ stage, data, riderData }) => (
   <div>
     <p>Team {data.name}</p>
-    {riderData && riderData[stage] !== undefined && [stage].riders && riderData[stage].riders.map(rider => (
+    {riderData && riderData[stage] && riderData[stage].riders ? riderData[stage].riders.map(rider => (
       <Rider
         rider={rider}
       />
-    ))}
+    )) : null}
   </div>
 );
 

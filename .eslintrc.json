@@ -4,7 +4,9 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": [
+    "react"
+  ],
   "env": {
     "es6": true,
     "browser": true,
@@ -13,6 +15,7 @@
     "jest": true
   },
   "rules": {
+    "indent": "off",
     "class-methods-use-this": "off",
     "comma-dangle": [
       "error",
@@ -32,7 +35,10 @@
     ],
     "no-unused-vars": "warn",
     "no-trailing-spaces": "warn",
-    "strict": ["error", "global"],
+    "strict": [
+      "error",
+      "global"
+    ],
     "react/display-name": "warn",
     "react/forbid-prop-types": "off",
     "react/jsx-boolean-value": "warn",
@@ -40,7 +46,12 @@
     "react/jsx-curly-spacing": "warn",
     "react/jsx-key": "warn",
     "react/jsx-filename-extension": "off",
-    "react/jsx-max-props-per-line": ["warn", { "maximum": 1 }],
+    "react/jsx-max-props-per-line": [
+      "warn",
+      {
+        "maximum": 1
+      }
+    ],
     "react/jsx-no-duplicate-props": "warn",
     "react/jsx-no-undef": "warn",
     "react/jsx-pascal-case": "warn",
