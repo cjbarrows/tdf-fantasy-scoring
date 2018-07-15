@@ -1,3 +1,7 @@
+body {
+  font-size: 12px;
+}
+
 span.points {
   padding-left: 10px;
 }
@@ -5,6 +9,7 @@ span.points {
 .score-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .score-container p {
@@ -19,6 +24,7 @@ span.points {
   margin: 2px 3px;
   padding: 1px;
   display: inline-block;
+  font-size: 9px;
 }
 
 .score-container span.yellow {
@@ -66,5 +72,16 @@ span.points {
 }
 
 .team-container .team-total {
+  font-weight: bold;
+  align-items: flex-end;
+}
+
+.stage-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+p.total-score {
+  font-size: 18px;
   font-weight: bold;
 }

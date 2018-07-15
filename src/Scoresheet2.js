@@ -28,35 +28,46 @@ const Rider = ({ name, scores }) => (
 );
 
 const Team = ({ name, totalPointsOnStage, riders }) => (
-  <div>
-    <p>{name}</p>
+  <div className="team-container">
+    <p className="team-name">{name}</p>
     {riders.map(({ name: riderName, scores }) => (
       <Rider
         name={riderName}
         scores={scores}
       />
     ))}
-    <p>Total: {totalPointsOnStage}</p>
+    <p className="team-total">Total: {totalPointsOnStage}</p>
   </div>
 );
 
 const Stage = ({ number, stageData }) => (
   <div>
-    <p>Stage {number + 1}</p>
-    {Object.entries(stageData).map(([name, { totalPointsOnStage, riders }]) => (
-      <Team
-        name={name}
-        totalPointsOnStage={totalPointsOnStage}
-        riders={riders}
-      />
-    ))}
+    <p className="stage-name">Stage {number + 1}</p>
+    <div className="score-container">
+      {Object.entries(stageData).map(([name, { totalPointsOnStage, riders }]) => (
+        <Team
+          name={name}
+          riders={riders}
+          totalPointsOnStage={totalPointsOnStage}
+        />
+      ))}
+    </div>
   </div>
 );
 
+const Totals = ({ totals }) => {
+  return (
+    <div className="score-container">
+      {totals.map(total => (
+        <p className="total-score">{total}</p>
+      ))}
+    </div>
+  );
+};
 class Scoresheet2 extends Component {
   render() {
     const {
-      data, data: { stages },
+      data, data: { stages }, data: { totals }
     } = this.props;
 
     return data ? (
@@ -66,6 +77,9 @@ class Scoresheet2 extends Component {
             number={index}
             stageData={stage}
           />))}
+        <Totals
+          totals={totals}
+        />
       </div>
     ) : null;
   }
