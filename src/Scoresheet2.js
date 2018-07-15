@@ -9,18 +9,19 @@ import PropTypes from 'prop-types';
 import './Scoresheet.css';
 
 // eslint-disable-next-line
-const Score = ({ points }) => {
+const Score = ({ points, type }) => {
   return (points > 0) ? (
-    <span>{points}</span>
+    <span className={`mini-points ${type}`}>{points}</span>
   ) : null;
 };
 
 const Rider = ({ name, scores }) => (
   <div>
     <p>{name}</p>
-    {scores.map(({ points }) => (
+    {scores.map(({ points, name: type }) => (
       <Score
         points={points}
+        type={type}
       />
     ))}
   </div>
