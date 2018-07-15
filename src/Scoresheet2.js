@@ -23,33 +23,20 @@ const Team = ({ stage, data, riderData }) => (
   </div>
 );
 
-const Stage = ({ data, index, byTeam }) => (
-  <div>
-    <p>Stage <span>{index + 1}</span></p>
-    {byTeam.map(team => (
-      <Team
-        stage={index}
-        data={team}
-        riderData={data}
-      />
-    ))}
-  </div>
-);
+const Stage = () => (
+  <div />
+)
 
 class Scoresheet2 extends Component {
   render() {
     const {
-      allTeams, data, data: { byStage, byTeam },
+      allTeams, data, data: { stages },
     } = this.props;
 
     return data ? (
       <div>
-        {byStage.map((stage, index) => (
-          <Stage
-            data={stage}
-            byTeam={byTeam}
-            index={index}
-          />))}
+        {stages.map(stage => (
+          <Stage />))}
       </div>
     ) : null;
   }

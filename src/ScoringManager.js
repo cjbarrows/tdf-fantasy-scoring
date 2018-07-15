@@ -46,21 +46,24 @@ const getOverallMountainPointsForRider = (stageIndex, rider, results) => {
 
 class ScoringManager extends Component {
   processData({ stageResults, overallResults, allTeams }) {
-    const data = { byTeam: [], byStage: [] };
+    const data = { stages: [] };
+
+    // data:
+    //   stages:
+    //     1:
+    //       team: name, total points
+    //       rider: name, points
 
     // eslint-disable-next-line
     const numStages =
       stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
 
     for (let stageIndex = 0; stageIndex < numStages; stageIndex += 1) {
-      data.byStage[stageIndex] = [];
       for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex += 1) {
-        data.byStage[stageIndex][teamIndex] = { stage: 0, riders: [] };
-        const totals = data.byStage[stageIndex][teamIndex];
         const team = allTeams[teamIndex];
-        if (data.byTeam[teamIndex] === undefined) {
-          data.byTeam[teamIndex] = { score: 0, name: team.name };
-        }
+        const teamName = team.name;
+        data.stages[stageIndex] = {};
+        data.stages[stageIndex][teamName] = { totalPointsOnStage: 0, riders: [] };
         for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex += 1) {
           const rider = team.riders[riderIndex];
           const scores = [
@@ -70,9 +73,8 @@ class ScoringManager extends Component {
             { name: 'Mtn', points: getOverallMountainPointsForRider(stageIndex, rider, overallResults) },
           ];
           const riderScore = scores.reduce((sum, { points }) => sum + points, 0);
-          totals.stage += riderScore;
-          totals.riders.push({ name: rider, scores });
-          data.byTeam[teamIndex].score += riderScore;
+          data.stages[stageIndex][teamName].totalPointsOnStage += riderScore;
+          data.stages[stageIndex][teamName].riders.push({ name: rider, scores });
         }
       }
     }
