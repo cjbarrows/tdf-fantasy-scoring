@@ -23,8 +23,10 @@ const Team = ({ stage, data, riderData }) => (
   </div>
 );
 
-const Stage = () => (
-  <div />
+const Stage = ({ number }) => (
+  <div>
+    <p>Stage {number + 1}</p>
+  </div>
 )
 
 class Scoresheet2 extends Component {
@@ -35,8 +37,11 @@ class Scoresheet2 extends Component {
 
     return data ? (
       <div>
-        {stages.map(stage => (
-          <Stage />))}
+        {stages.map((stage, index) => (
+          <Stage
+            number={index}
+            stageData={stage}
+          />))}
       </div>
     ) : null;
   }
