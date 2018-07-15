@@ -8,16 +8,31 @@ import PropTypes from 'prop-types';
 
 import './Scoresheet.css';
 
-const Rider = ({ name }) => (
-  <p>{name}</p>
+// eslint-disable-next-line
+const Score = ({ points }) => {
+  return (points > 0) ? (
+    <span>{points}</span>
+  ) : null;
+};
+
+const Rider = ({ name, scores }) => (
+  <div>
+    <p>{name}</p>
+    {scores.map(({ points }) => (
+      <Score
+        points={points}
+      />
+    ))}
+  </div>
 );
 
 const Team = ({ name, totalPointsOnStage, riders }) => (
   <div>
     <p>{name}</p>
-    {riders.map(({ name: riderName }) => (
+    {riders.map(({ name: riderName, scores }) => (
       <Rider
         name={riderName}
+        scores={scores}
       />
     ))}
     <p>Total: {totalPointsOnStage}</p>
