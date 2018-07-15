@@ -8,31 +8,39 @@ import PropTypes from 'prop-types';
 
 import './Scoresheet.css';
 
-const Rider = ({ rider }) => (
-  <p>Rider <span>{rider.name}</span></p>
+const Rider = ({ name }) => (
+  <p>{name}</p>
 );
 
-const Team = ({ stage, data, riderData }) => (
+const Team = ({ name, totalPointsOnStage, riders }) => (
   <div>
-    <p>Team {data.name}</p>
-    {riderData && riderData[stage] && riderData[stage].riders ? riderData[stage].riders.map(rider => (
+    <p>{name}</p>
+    {riders.map(({ name: riderName }) => (
       <Rider
-        rider={rider}
+        name={riderName}
       />
-    )) : null}
+    ))}
+    <p>Total: {totalPointsOnStage}</p>
   </div>
 );
 
-const Stage = ({ number }) => (
+const Stage = ({ number, stageData }) => (
   <div>
     <p>Stage {number + 1}</p>
+    {Object.entries(stageData).map(([name, { totalPointsOnStage, riders }]) => (
+      <Team
+        name={name}
+        totalPointsOnStage={totalPointsOnStage}
+        riders={riders}
+      />
+    ))}
   </div>
-)
+);
 
 class Scoresheet2 extends Component {
   render() {
     const {
-      allTeams, data, data: { stages },
+      data, data: { stages },
     } = this.props;
 
     return data ? (

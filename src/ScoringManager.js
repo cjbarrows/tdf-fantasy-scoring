@@ -59,10 +59,10 @@ class ScoringManager extends Component {
       stageResults && Object.keys(stageResults) ? Object.keys(stageResults).length : 0;
 
     for (let stageIndex = 0; stageIndex < numStages; stageIndex += 1) {
+      data.stages[stageIndex] = {};
       for (let teamIndex = 0; teamIndex < allTeams.length; teamIndex += 1) {
         const team = allTeams[teamIndex];
         const teamName = team.name;
-        data.stages[stageIndex] = {};
         data.stages[stageIndex][teamName] = { totalPointsOnStage: 0, riders: [] };
         for (let riderIndex = 0; riderIndex < team.riders.length; riderIndex += 1) {
           const rider = team.riders[riderIndex];
