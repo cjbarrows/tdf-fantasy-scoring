@@ -38,26 +38,11 @@ class App extends Component {
 
     return dataReducer ? (
       <div className="App">
-        <button
-          onClick={this.doSomething}
-          type="button"
-        >
-          Test redux action
-        </button>
-        <button
-          onClick={this.doScoring}
-          type="button"
-        >
-          Scoring
-        </button>
         <ScoringManager
           allTeams={teams.allTeams}
           overallResults={dataReducer.overallResults}
           stageResults={dataReducer.stageResults}
         />
-        <pre>
-          {JSON.stringify(this.props)}
-        </pre>
       </div>
     ) : null;
   }
